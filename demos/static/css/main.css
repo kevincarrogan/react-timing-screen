@@ -57,6 +57,10 @@ body {
     width: 20px;
 }
 
+.driver-time--personal-best .driver-position {
+    background-color: #59fd73;
+}
+
 .driver-name {
     align-items: center;
     display: flex;
@@ -90,4 +94,8 @@ body {
     display: flex;
     justify-content: flex-end;
     padding: 0 10px 0 0;
+}
+
+.driver-time--personal-best .lap-status {
+    color: #59fd73;
 }
