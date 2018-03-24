@@ -1,0 +1,6 @@
+body {
+    background: url(/static/images/background.jpg) center no-repeat;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
