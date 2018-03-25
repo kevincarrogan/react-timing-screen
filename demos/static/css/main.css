@@ -47,6 +47,7 @@ body {
 .driver-position {
     align-items: center;
     background-color: #fff;
+    border-bottom-right-radius: 5px;
     color: #000;
     display: flex;
     font-size: 80%;
