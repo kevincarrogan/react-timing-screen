@@ -61,10 +61,18 @@ body {
     background-color: #59fd73;
 }
 
+.driver-time--in-pit .driver-position {
+    background-color: #bbb;
+}
+
 .driver-name {
     align-items: center;
     display: flex;
     padding: 0 15px;
+}
+
+.driver-time--in-pit .driver-name {
+    color: #bbb;
 }
 
 .driver-name:before {
@@ -98,4 +106,8 @@ body {
 
 .driver-time--personal-best .lap-status {
     color: #59fd73;
+}
+
+.driver-time--in-pit .lap-status {
+    color: #bbb;
 }
