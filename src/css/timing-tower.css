@@ -1,0 +1,97 @@
+.timing-tower {
+    color: #fff;
+}
+
+.session-details {
+    background-color: #111;
+    border-top-right-radius: 5px;
+    padding: 3px;
+    text-align: center;
+}
+
+.session-details h1 {
+    margin: 0;
+}
+
+.driver-times {
+    background-color: rgba(0, 0, 0, .75);
+    display: grid;
+    grid-template-columns: auto auto 80px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.driver-time {
+    display: contents;
+    padding: 3px;
+}
+
+.driver-position {
+    align-items: center;
+    background-color: #fff;
+    border-bottom-right-radius: 5px;
+    color: #000;
+    display: flex;
+    font-size: 80%;
+    font-weight: bold;
+    height: 20px;
+    justify-content: center;
+    margin: 3px;
+    width: 20px;
+}
+
+.driver-time--personal-best .driver-position {
+    background-color: #59fd73;
+}
+
+.driver-time--in-pit .driver-position {
+    background-color: #bbb;
+}
+
+.driver-name {
+    align-items: center;
+    display: flex;
+    padding: 0 15px;
+}
+
+.driver-time--in-pit .driver-name {
+    color: #bbb;
+}
+
+.driver-name:before {
+    background-color: #fff;
+    content: "";
+    display: inline-block;
+    height: 50%;
+    left: -8px;
+    position: relative;
+    width: 3px;
+}
+
+.mercedes:before {
+    background-color: #4be6e6;
+}
+
+.ferrari:before {
+    background-color: #f00;
+}
+
+.red-bull:before {
+    background-color: #0028f5;
+}
+
+.lap-status {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 10px 0 0;
+}
+
+.driver-time--personal-best .lap-status {
+    color: #59fd73;
+}
+
+.driver-time--in-pit .lap-status {
+    color: #bbb;
+}

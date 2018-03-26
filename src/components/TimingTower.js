@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../css/timing-tower.css';
+
 const TimingTower = () => {
     return (
         <section className="timing-tower">
