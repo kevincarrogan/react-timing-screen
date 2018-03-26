@@ -1,0 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: HelveticaNeue-Light, sans-serif
+}
+
+body {
+    background: url('../images/background.jpg') center no-repeat;
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+    width: 100vw;
+}
