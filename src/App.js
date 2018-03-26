@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import TimingTower from './components/TimingTower';
+
 const App = () => {
-    return null;
+    return (
+        <TimingTower />
+    );
 };
 
 ReactDOM.render(<App />, document.getElementById('app'));
