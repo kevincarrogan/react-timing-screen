@@ -53,6 +53,7 @@
     align-items: center;
     display: flex;
     padding: 0 15px;
+    text-transform: uppercase;
 }
 
 .driver-time--in-pit .driver-name {
