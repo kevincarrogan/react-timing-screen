@@ -2,13 +2,20 @@ import React from 'react';
 
 import '../css/timing-tower.css';
 
+class Driver {
+    constructor(name, team) {
+        this.name = name;
+        this.team = team;
+    }
+}
+
 const driverStatuses = [
-    ['Hamilton', 84569, 'mercedes'],
-    ['Bottas', 84570, 'mercedes'],
-    ['Raikkonen', 85828, 'ferrari'],
-    ['Verstappen', 105929, 'red-bull'],
-    ['Ricciardo', 146201, 'red-bull'],
-    ['Vettel', 165450, 'ferrari']
+    [new Driver('Hamilton', 'mercedes'), 84569],
+    [new Driver('Bottas', 'mercedes'), 84570],
+    [new Driver('Raikkonen', 'ferrari'), 85828],
+    [new Driver('Verstappen', 'red-bull'), 105929],
+    [new Driver('Ricciardo', 'red-bull'), 146201],
+    [new Driver('Vettel', 'ferrari'), 165450]
 ];
 
 const getDriverShortName = name => name.substring(0, 3);
@@ -52,19 +59,23 @@ const TimingTower = () => {
                 <div>1:17:59</div>
             </div>
             <ol className="driver-times">
-                {driverStatuses.map((driverStatus, position) => (
-                    <li className="driver-time" key={driverStatus[0]}>
-                        <span className="driver-position">{position + 1}</span>
-                        <span className={`driver-name ${driverStatus[2]}`}>{getDriverShortName(driverStatus[0])}</span>
-                        <span className="lap-status">
-                            {position == 0 ? (
-                                humanReadableTimeFromMilliseconds(driverStatus[1])
-                            ) : (
-                                '+' + humanReadableDelta(driverStatus[1], fastestTime)
-                            )}
-                        </span>
-                    </li>
-                ))}
+                {driverStatuses.map((driverStatus, position) => {
+                    const driver = driverStatus[0];
+                    const time = driverStatus[1];
+                    return (
+                        <li className="driver-time" key={driver.name}>
+                            <span className="driver-position">{position + 1}</span>
+                            <span className={`driver-name ${driver.team}`}>{getDriverShortName(driver.name)}</span>
+                            <span className="lap-status">
+                                {position == 0 ? (
+                                    humanReadableTimeFromMilliseconds(time)
+                                ) : (
+                                    '+' + humanReadableDelta(time, fastestTime)
+                                )}
+                            </span>
+                        </li>
+                    );
+                })}
             </ol>
         </section>
     );
