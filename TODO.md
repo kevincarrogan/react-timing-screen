@@ -3,7 +3,7 @@
 ## Timing tower
 - [x] Stub timing tower HTML
 - [x] Basic timing tower layout/styling
-- [ ] Extract timing tower into a component
+- [x] Extract timing tower into a component
 - [ ] Make data for timing tower dynamic
 
 ## Driver timing
