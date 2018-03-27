@@ -3,12 +3,12 @@ import React from 'react';
 import '../css/timing-tower.css';
 
 const driverStatuses = [
-    ['Hamilton', 84569],
-    ['Bottas', 84570],
-    ['Raikkonen', 85828],
-    ['Verstappen', 105929],
-    ['Ricciardo', 146201],
-    ['Vettel', 165450]
+    ['Hamilton', 84569, 'mercedes'],
+    ['Bottas', 84570, 'mercedes'],
+    ['Raikkonen', 85828, 'ferrari'],
+    ['Verstappen', 105929, 'red-bull'],
+    ['Ricciardo', 146201, 'red-bull'],
+    ['Vettel', 165450, 'ferrari']
 ];
 
 const getDriverShortName = name => name.substring(0, 3);
@@ -55,7 +55,7 @@ const TimingTower = () => {
                 {driverStatuses.map((driverStatus, position) => (
                     <li className="driver-time" key={driverStatus[0]}>
                         <span className="driver-position">{position + 1}</span>
-                        <span className="driver-name">{getDriverShortName(driverStatus[0])}</span>
+                        <span className={`driver-name ${driverStatus[2]}`}>{getDriverShortName(driverStatus[0])}</span>
                         <span className="lap-status">
                             {position == 0 ? (
                                 humanReadableTimeFromMilliseconds(driverStatus[1])
