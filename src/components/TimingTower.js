@@ -3,35 +3,22 @@ import React from 'react';
 import '../css/timing-tower.css';
 
 const driverStatuses = [
-    ['Hamilton', '1:24.569'],
-    ['Bottas', '1:24.570'],
-    ['Raikkonen', '1:25.828'],
-    ['Verstappen', '1:45.929'],
-    ['Ricciardo', '2:26.201'],
-    ['Vettel', '2:45.450']
+    ['Hamilton', 84569],
+    ['Bottas', 84570],
+    ['Raikkonen', 85828],
+    ['Verstappen', 105929],
+    ['Ricciardo', 146201],
+    ['Vettel', 165450]
 ];
 
 const getDriverShortName = name => name.substring(0, 3);
 
-const timeInMilliseconds = time => {
-    const components = time.split(/[:\.]/);
-    const minutes = parseInt(components[0], 10);
-    const seconds = parseInt(components[1], 10);
-    const milliseconds = parseInt(components[2], 10);
-
-    return (minutes * 60 * 1000) + (seconds * 1000) + milliseconds;
-};
-
 const getFastestTime = driverStatuses => driverStatuses
-    .map(
-        status => timeInMilliseconds(status[1])
-    )
-    .concat()
+    .map(status => status[1])
     .sort((a, b) => a > b)[0];
 
-const getDelta = (currentTime, fastestTimeInMilliseconds) => {
-    const currentTimeInMilliseconds = timeInMilliseconds(currentTime);
-    const diff = currentTimeInMilliseconds - fastestTimeInMilliseconds;
+const getDelta = (currentTime, fastestTime) => {
+    const diff = currentTimeInMilliseconds - fastestTime;
 
     return diff;
 };
