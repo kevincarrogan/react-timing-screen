@@ -7,7 +7,7 @@ class Driver {
         this.name = name;
         this.team = team;
     }
-}
+};
 
 const driverStatuses = [
     [new Driver('Hamilton', 'mercedes'), 84569],
