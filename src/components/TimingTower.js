@@ -56,7 +56,13 @@ const TimingTower = () => {
                     <li className="driver-time" key={driverStatus[0]}>
                         <span className="driver-position">{position + 1}</span>
                         <span className="driver-name">{getDriverShortName(driverStatus[0])}</span>
-                        <span className="lap-status">+{humanReadableDelta(driverStatus[1], fastestTime)}</span>
+                        <span className="lap-status">
+                            {position == 0 ? (
+                                humanReadableTimeFromMilliseconds(driverStatus[1])
+                            ) : (
+                                '+' + humanReadableDelta(driverStatus[1], fastestTime)
+                            )}
+                        </span>
                     </li>
                 ))}
             </ol>
