@@ -4,10 +4,8 @@ import '../css/app.css';
 
 import TimingTower from './TimingTower';
 
-const App = () => {
-    return (
-        <TimingTower />
-    );
-};
+const App = () => (
+  <TimingTower />
+);
 
 export default App;
