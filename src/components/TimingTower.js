@@ -17,12 +17,6 @@ const getFastestTime = driverStatuses => driverStatuses
     .map(status => status[1])
     .sort((a, b) => a > b)[0];
 
-const getDelta = (currentTime, fastestTime) => {
-    const diff = currentTimeInMilliseconds - fastestTime;
-
-    return diff;
-};
-
 const humanReadableTimeFromMilliseconds = time => {
     let totalMilliseconds = time;
 
@@ -43,6 +37,12 @@ const humanReadableTimeFromMilliseconds = time => {
     return `${seconds}.${paddedMilliseconds}`;
 };
 
+const humanReadableDelta = (thisTime, otherTime) => {
+    let delta = thisTime - otherTime;
+
+    return humanReadableTimeFromMilliseconds(delta);
+};
+
 const TimingTower = () => {
     const fastestTime = getFastestTime(driverStatuses);
     return (
@@ -56,7 +56,7 @@ const TimingTower = () => {
                     <li className="driver-time" key={driverStatus[0]}>
                         <span className="driver-position">{position + 1}</span>
                         <span className="driver-name">{getDriverShortName(driverStatus[0])}</span>
-                        <span className="lap-status">+{humanReadableTimeFromMilliseconds(getDelta(driverStatus[1], fastestTime))}</span>
+                        <span className="lap-status">+{humanReadableDelta(driverStatus[1], fastestTime)}</span>
                     </li>
                 ))}
             </ol>
