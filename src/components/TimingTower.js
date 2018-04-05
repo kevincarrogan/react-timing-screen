@@ -1,13 +1,9 @@
 import React from 'react';
 
-import '../css/timing-tower.css';
+import Driver from '../models/driver';
+import Session from '../models/session';
 
-class Driver {
-  constructor(name, team) {
-    this.name = name;
-    this.team = team;
-  }
-}
+import '../css/timing-tower.css';
 
 const STATUS = {
   ON_TRACK: 'ON_TRACK',
@@ -93,13 +89,6 @@ const humanReadableTimeFromSeconds = (time) => {
 
   return `${hours}:${paddedMinutes}:${paddedSeconds}`;
 };
-
-class Session {
-  constructor(name) {
-    this.name = name;
-    this.currentTime = 4681;
-  }
-}
 
 const practiceTwo = new Session('P2');
 
