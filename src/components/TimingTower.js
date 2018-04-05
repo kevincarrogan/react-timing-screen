@@ -48,6 +48,10 @@ const getFastestTime = statuses => statuses
   .map(status => status[1])
   .sort((a, b) => a > b)[0];
 
+const padIntegerStart = (integer, padLength = 2) => (
+  integer.toString().padStart(padLength, '0')
+);
+
 const humanReadableTimeFromMilliseconds = (time) => {
   let totalMilliseconds = time;
 
@@ -58,10 +62,10 @@ const humanReadableTimeFromMilliseconds = (time) => {
   totalMilliseconds -= (seconds * 1000);
 
   const milliseconds = totalMilliseconds;
-  const paddedMilliseconds = milliseconds.toString().padStart(3, '0');
+  const paddedMilliseconds = padIntegerStart(milliseconds, 3);
 
   if (minutes > 0) {
-    const paddedSeconds = seconds.toString().padStart(2, '0');
+    const paddedSeconds = padIntegerStart(seconds);
     return `${minutes}:${paddedSeconds}.${paddedMilliseconds}`;
   }
 
@@ -81,11 +85,11 @@ const humanReadableTimeFromSeconds = (time) => {
   totalSeconds -= hours * (60 * 60);
 
   const minutes = Math.floor(totalSeconds / 60);
-  const paddedMinutes = minutes.toString().padStart(2, '0');
+  const paddedMinutes = padIntegerStart(minutes);
   totalSeconds -= minutes * 60;
 
   const seconds = totalSeconds;
-  const paddedSeconds = seconds.toString().padStart(2, '0');
+  const paddedSeconds = padIntegerStart(seconds);
 
   return `${hours}:${paddedMinutes}:${paddedSeconds}`;
 };
