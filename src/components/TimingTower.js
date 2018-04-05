@@ -129,7 +129,9 @@ const TimingTower = () => {
           return (
             <li className="driver-time" key={driver.name}>
               <span className="driver-position">{position + 1}</span>
-              <span className={`driver-name ${driver.team}`}>{getDriverShortName(driver.name)}</span>
+              <span className={`driver-name ${driver.team}`}>
+                {getDriverShortName(driver.name)}
+              </span>
               <span className="lap-status">{lapStatus}</span>
             </li>
           );
