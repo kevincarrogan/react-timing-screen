@@ -9,13 +9,37 @@ class Driver {
   }
 }
 
+const STATUS = {
+  ON_TRACK: 'ON_TRACK',
+  IN_PIT: 'IN_PIT',
+  OUT_LAP: 'OUT_LAP',
+};
+
 const driverStatuses = [
-  [new Driver('Hamilton', 'mercedes'), 84569],
-  [new Driver('Bottas', 'mercedes'), 84570],
-  [new Driver('Raikkonen', 'ferrari'), 85828],
-  [new Driver('Verstappen', 'red-bull'), 105929],
-  [new Driver('Ricciardo', 'red-bull'), 146201],
-  [new Driver('Vettel', 'ferrari'), 165450],
+  [
+    new Driver('Hamilton', 'mercedes'),
+    84569, STATUS.ON_TRACK,
+  ],
+  [
+    new Driver('Bottas', 'mercedes'),
+    84570, STATUS.ON_TRACK,
+  ],
+  [
+    new Driver('Raikkonen', 'ferrari'),
+    85828, STATUS.ON_TRACK,
+  ],
+  [
+    new Driver('Verstappen', 'red-bull'),
+    105929, STATUS.IN_PIT,
+  ],
+  [
+    new Driver('Ricciardo', 'red-bull'),
+    146201, STATUS.ON_TRACK,
+  ],
+  [
+    new Driver('Vettel', 'ferrari'),
+    165450, STATUS.OUT_LAP,
+  ],
 ];
 
 const getDriverShortName = name => name.substring(0, 3);
@@ -62,17 +86,22 @@ const TimingTower = () => {
         {driverStatuses.map((driverStatus, position) => {
           const driver = driverStatus[0];
           const time = driverStatus[1];
+          const currentState = driverStatus[2];
+
+          let lapStatus;
+          if (currentState === STATUS.OUT_LAP) {
+            lapStatus = 'OUT LAP';
+          } else if (position === 0) {
+            lapStatus = humanReadableTimeFromMilliseconds(time);
+          } else {
+            lapStatus = `+${humanReadableDelta(time, fastestTime)}`;
+          }
+
           return (
             <li className="driver-time" key={driver.name}>
               <span className="driver-position">{position + 1}</span>
               <span className={`driver-name ${driver.team}`}>{getDriverShortName(driver.name)}</span>
-              <span className="lap-status">
-                {position === 0 ? (
-                  humanReadableTimeFromMilliseconds(time)
-                ) : (
-                  `+${humanReadableDelta(time, fastestTime)}`
-                )}
-              </span>
+              <span className="lap-status">{lapStatus}</span>
             </li>
           );
         })}
