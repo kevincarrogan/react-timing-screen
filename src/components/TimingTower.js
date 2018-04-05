@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Driver from '../models/driver';
 import Session from '../models/session';
@@ -90,15 +91,13 @@ const humanReadableTimeFromSeconds = (time) => {
   return `${hours}:${paddedMinutes}:${paddedSeconds}`;
 };
 
-const practiceTwo = new Session('P2');
-
-const TimingTower = () => {
+const TimingTower = ({ session }) => {
   const fastestTime = getFastestTime(driverStatuses);
   return (
     <section className="timing-tower">
       <div className="session-details">
-        <h1>{practiceTwo.name}</h1>
-        <div>{humanReadableTimeFromSeconds(practiceTwo.currentTime)}</div>
+        <h1>{session.name}</h1>
+        <div>{humanReadableTimeFromSeconds(session.currentTime)}</div>
       </div>
       <ol className="driver-times">
         {driverStatuses.map((driverStatus, position) => {
@@ -128,6 +127,10 @@ const TimingTower = () => {
       </ol>
     </section>
   );
+};
+
+TimingTower.propTypes = {
+  session: PropTypes.instanceOf(Session).isRequired,
 };
 
 export default TimingTower;
