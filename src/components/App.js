@@ -7,6 +7,7 @@ import TimingTower from './TimingTower';
 
 const App = () => {
   const practiceTwo = new Session('P2');
+  practiceTwo.start();
   return (
     <TimingTower
       session={practiceTwo}

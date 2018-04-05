@@ -91,43 +91,75 @@ const humanReadableTimeFromSeconds = (time) => {
   return `${hours}:${paddedMinutes}:${paddedSeconds}`;
 };
 
-const TimingTower = ({ session }) => {
-  const fastestTime = getFastestTime(driverStatuses);
-  return (
-    <section className="timing-tower">
-      <div className="session-details">
-        <h1>{session.name}</h1>
-        <div>{humanReadableTimeFromSeconds(session.currentTime)}</div>
-      </div>
-      <ol className="driver-times">
-        {driverStatuses.map((driverStatus, position) => {
-          const driver = driverStatus[0];
-          const time = driverStatus[1];
-          const currentState = driverStatus[2];
+class TimingTower extends React.Component {
+  constructor(props) {
+    super(props);
 
-          let lapStatus;
-          if (currentState === STATUS.OUT_LAP) {
-            lapStatus = 'OUT LAP';
-          } else if (position === 0) {
-            lapStatus = humanReadableTimeFromMilliseconds(time);
-          } else {
-            lapStatus = `+${humanReadableDelta(time, fastestTime)}`;
-          }
+    this.state = {
+      sessionCurrentTime: props.session.currentTime,
+    };
+  }
 
-          return (
-            <li className="driver-time" key={driver.name}>
-              <span className="driver-position">{position + 1}</span>
-              <span className={`driver-name ${driver.team}`}>
-                {getDriverShortName(driver.name)}
-              </span>
-              <span className="lap-status">{lapStatus}</span>
-            </li>
-          );
-        })}
-      </ol>
-    </section>
-  );
-};
+  componentDidMount() {
+    let currentTimestamp = null;
+
+    const step = (timestamp) => {
+      if (!currentTimestamp) {
+        currentTimestamp = timestamp;
+      }
+      const progress = timestamp - currentTimestamp;
+      if (progress >= 1000) {
+        currentTimestamp = timestamp;
+        this.setState({
+          sessionCurrentTime: this.props.session.currentTime,
+        });
+      }
+      requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  }
+
+  render() {
+    const fastestTime = getFastestTime(driverStatuses);
+    return (
+      <section className="timing-tower">
+        <div className="session-details">
+          <h1>{this.props.session.name}</h1>
+          <div>
+            {humanReadableTimeFromSeconds(this.state.sessionCurrentTime)}
+          </div>
+        </div>
+        <ol className="driver-times">
+          {driverStatuses.map((driverStatus, position) => {
+            const driver = driverStatus[0];
+            const time = driverStatus[1];
+            const currentState = driverStatus[2];
+
+            let lapStatus;
+            if (currentState === STATUS.OUT_LAP) {
+              lapStatus = 'OUT LAP';
+            } else if (position === 0) {
+              lapStatus = humanReadableTimeFromMilliseconds(time);
+            } else {
+              lapStatus = `+${humanReadableDelta(time, fastestTime)}`;
+            }
+
+            return (
+              <li className="driver-time" key={driver.name}>
+                <span className="driver-position">{position + 1}</span>
+                <span className={`driver-name ${driver.team}`}>
+                  {getDriverShortName(driver.name)}
+                </span>
+                <span className="lap-status">{lapStatus}</span>
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+    );
+  }
+}
 
 TimingTower.propTypes = {
   session: PropTypes.instanceOf(Session).isRequired,
