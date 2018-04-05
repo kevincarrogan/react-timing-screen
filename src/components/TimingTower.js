@@ -101,23 +101,14 @@ class TimingTower extends React.Component {
   }
 
   componentDidMount() {
-    let currentTimestamp = null;
-
-    const step = (timestamp) => {
-      if (!currentTimestamp) {
-        currentTimestamp = timestamp;
-      }
-      const progress = timestamp - currentTimestamp;
-      if (progress >= 1000) {
-        currentTimestamp = timestamp;
-        this.setState({
-          sessionCurrentTime: this.props.session.currentTime,
-        });
-      }
-      requestAnimationFrame(step);
+    const tick = () => {
+      this.setState({
+        sessionCurrentTime: this.props.session.currentTime,
+      });
+      requestAnimationFrame(tick);
     };
 
-    requestAnimationFrame(step);
+    requestAnimationFrame(tick);
   }
 
   render() {
