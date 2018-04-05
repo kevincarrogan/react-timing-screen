@@ -74,13 +74,38 @@ const humanReadableDelta = (thisTime, otherTime) => {
   return humanReadableTimeFromMilliseconds(delta);
 };
 
+const humanReadableTimeFromSeconds = (time) => {
+  let totalSeconds = time;
+
+  const hours = Math.floor(totalSeconds / (60 * 60));
+  totalSeconds -= hours * (60 * 60);
+
+  const minutes = Math.floor(totalSeconds / 60);
+  const paddedMinutes = minutes.toString().padStart(2, '0');
+  totalSeconds -= minutes * 60;
+
+  const seconds = totalSeconds;
+  const paddedSeconds = seconds.toString().padStart(2, '0');
+
+  return `${hours}:${paddedMinutes}:${paddedSeconds}`;
+};
+
+class Session {
+  constructor(name) {
+    this.name = name;
+    this.currentTime = 4681;
+  }
+}
+
+const practiceTwo = new Session('P2');
+
 const TimingTower = () => {
   const fastestTime = getFastestTime(driverStatuses);
   return (
     <section className="timing-tower">
       <div className="session-details">
-        <h1>P2</h1>
-        <div>1:17:59</div>
+        <h1>{practiceTwo.name}</h1>
+        <div>{humanReadableTimeFromSeconds(practiceTwo.currentTime)}</div>
       </div>
       <ol className="driver-times">
         {driverStatuses.map((driverStatus, position) => {
