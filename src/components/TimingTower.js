@@ -44,6 +44,7 @@ const getDriverShortName = name => name.substring(0, 3);
 
 const getFastestTime = statuses => statuses
   .map(status => status[1])
+  .filter(time => !!time)
   .sort((a, b) => a > b)[0];
 
 const padIntegerStart = (integer, padLength = 2) => (
