@@ -126,9 +126,7 @@ class TimingTower extends React.Component {
         </div>
         <ol className="driver-times">
           {driverStatuses.map((driverStatus, position) => {
-            const driver = driverStatus[0];
-            const time = driverStatus[1];
-            const currentState = driverStatus[2];
+            const [driver, time, currentState] = driverStatus;
 
             let lapStatus;
             if (currentState === STATUS.OUT_LAP) {
