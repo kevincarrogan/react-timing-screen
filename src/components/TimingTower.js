@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import Driver from '../models/driver';
 import Session from '../models/session';
@@ -137,8 +138,17 @@ class TimingTower extends React.Component {
               lapStatus = `+${humanReadableDelta(time, fastestTime)}`;
             }
 
+            const driverStatusClassNames = classNames(
+              'driver-time',
+              {
+                'driver-time--in-pit': currentState === STATUS.IN_PIT,
+                'driver-time--out-lap': currentState === STATUS.OUT_LAP,
+                'driver-time--on-track': currentState === STATUS.ON_TRACK,
+              },
+            );
+
             return (
-              <li className="driver-time" key={driver.name}>
+              <li className={driverStatusClassNames} key={driver.name}>
                 <span className="driver-position">{position + 1}</span>
                 <span className={`driver-name ${driver.team}`}>
                   {getDriverShortName(driver.name)}
