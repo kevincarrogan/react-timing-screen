@@ -1,6 +1,7 @@
 class Session {
-  constructor(name) {
+  constructor(name, length) {
     this.name = name;
+    this.length = length;
     this.currentTime = 0;
   }
 

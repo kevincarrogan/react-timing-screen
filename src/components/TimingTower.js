@@ -113,12 +113,15 @@ class TimingTower extends React.Component {
 
   render() {
     const fastestTime = getFastestTime(driverStatuses);
+    const sessionLength = this.props.session.length;
+    const { sessionCurrentTime } = this.state;
+    const sessionTimeLeft = sessionLength - sessionCurrentTime;
     return (
       <section className="timing-tower">
         <div className="session-details">
           <h1>{this.props.session.name}</h1>
           <div>
-            {humanReadableTimeFromSeconds(this.state.sessionCurrentTime)}
+            {humanReadableTimeFromSeconds(sessionTimeLeft)}
           </div>
         </div>
         <ol className="driver-times">
