@@ -92,6 +92,22 @@ const humanReadableTimeFromSeconds = (time) => {
   return `${hours}:${paddedMinutes}:${paddedSeconds}`;
 };
 
+const lapStatus = (time, currentState, position, fastestTime) => {
+  if (!time) {
+    return 'NO TIME';
+  }
+
+  if (currentState === STATUS.OUT_LAP) {
+    return 'OUT LAP';
+  }
+
+  if (position === 0) {
+    return humanReadableTimeFromMilliseconds(time);
+  }
+
+  return `+${humanReadableDelta(time, fastestTime)}`;
+};
+
 class TimingTower extends React.Component {
   constructor(props) {
     super(props);
@@ -129,17 +145,6 @@ class TimingTower extends React.Component {
           {driverStatuses.map((driverStatus, position) => {
             const [driver, time, currentState] = driverStatus;
 
-            let lapStatus;
-            if (!time) {
-              lapStatus = 'NO TIME';
-            } else if (currentState === STATUS.OUT_LAP) {
-              lapStatus = 'OUT LAP';
-            } else if (position === 0) {
-              lapStatus = humanReadableTimeFromMilliseconds(time);
-            } else {
-              lapStatus = `+${humanReadableDelta(time, fastestTime)}`;
-            }
-
             const driverStatusClassNames = classNames(
               'driver-time',
               {
@@ -155,7 +160,9 @@ class TimingTower extends React.Component {
                 <span className={`driver-name ${driver.team}`}>
                   {getDriverShortName(driver.name)}
                 </span>
-                <span className="lap-status">{lapStatus}</span>
+                <span className="lap-status">
+                  {lapStatus(time, currentState, position, fastestTime)}
+                </span>
               </li>
             );
           })}
