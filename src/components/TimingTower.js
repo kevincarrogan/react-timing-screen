@@ -27,16 +27,16 @@ const driverStatuses = [
     85828, STATUS.ON_TRACK,
   ],
   [
-    new Driver('Verstappen', 'red-bull'),
-    105929, STATUS.IN_PIT,
-  ],
-  [
     new Driver('Ricciardo', 'red-bull'),
     146201, STATUS.ON_TRACK,
   ],
   [
     new Driver('Vettel', 'ferrari'),
     165450, STATUS.OUT_LAP,
+  ],
+  [
+    new Driver('Verstappen', 'red-bull'),
+    null, STATUS.IN_PIT,
   ],
 ];
 
@@ -130,7 +130,9 @@ class TimingTower extends React.Component {
             const [driver, time, currentState] = driverStatus;
 
             let lapStatus;
-            if (currentState === STATUS.OUT_LAP) {
+            if (!time) {
+              lapStatus = 'NO TIME';
+            } else if (currentState === STATUS.OUT_LAP) {
               lapStatus = 'OUT LAP';
             } else if (position === 0) {
               lapStatus = humanReadableTimeFromMilliseconds(time);
