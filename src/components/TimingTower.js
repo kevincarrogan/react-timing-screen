@@ -13,7 +13,7 @@ const STATUS = {
   OUT_LAP: 'OUT_LAP',
 };
 
-const driverStatuses = [
+let driverStatuses = [
   [
     new Driver('Hamilton', 'mercedes'),
     84569, STATUS.ON_TRACK,
@@ -109,12 +109,30 @@ const lapStatus = (time, currentState, position, fastestTime) => {
   return `+${humanReadableDelta(time, fastestTime)}`;
 };
 
+const updateDriverTimes = () => {
+  driverStatuses = driverStatuses.map((driverStatus) => {
+    const driver = driverStatus[0];
+    const time = driverStatus[1];
+    const status = driverStatus[2];
+    const statusKeys = Object.keys(STATUS);
+    const statusIndex = statusKeys.indexOf(status);
+    const newStatusIndex = (statusIndex + 1) % statusKeys.length;
+    const newStatusKey = statusKeys[newStatusIndex];
+    return [
+      driver, time + 1, STATUS[newStatusKey],
+    ];
+  });
+};
+
+window.setInterval(updateDriverTimes, 5000);
+
 class TimingTower extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       sessionCurrentTime: props.session.currentTime,
+      driverStatuses,
     };
   }
 
@@ -122,6 +140,7 @@ class TimingTower extends React.Component {
     const tick = () => {
       this.setState({
         sessionCurrentTime: this.props.session.currentTime,
+        driverStatuses,
       });
       requestAnimationFrame(tick);
     };
@@ -143,7 +162,7 @@ class TimingTower extends React.Component {
           </div>
         </div>
         <ol className="driver-times">
-          {driverStatuses.map((driverStatus, position) => {
+          {this.state.driverStatuses.map((driverStatus, position) => {
             const [driver, time, currentState] = driverStatus;
 
             const driverStatusClassNames = classNames(
