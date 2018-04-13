@@ -133,6 +133,10 @@ const updateDriverTimes = () => {
 
 window.setInterval(updateDriverTimes, 5000);
 
+const sortByTime = statuses => statuses
+  .slice()
+  .sort((a, b) => a[1] > b[1]);
+
 class TimingTower extends React.Component {
   constructor(props) {
     super(props);
@@ -160,6 +164,7 @@ class TimingTower extends React.Component {
     const sessionLength = this.props.session.length;
     const { sessionCurrentTime } = this.state;
     const sessionTimeLeft = sessionLength - sessionCurrentTime;
+    const sortedDriverTimes = sortByTime(this.state.driverStatuses);
     return (
       <section className="timing-tower">
         <div className="session-details">
@@ -169,7 +174,7 @@ class TimingTower extends React.Component {
           </div>
         </div>
         <ol className="driver-times">
-          {this.state.driverStatuses.map((driverStatus, position) => {
+          {sortedDriverTimes.map((driverStatus, position) => {
             const [driver, time, currentState] = driverStatus;
 
             const driverStatusClassNames = classNames(
