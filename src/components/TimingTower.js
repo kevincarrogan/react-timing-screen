@@ -110,10 +110,7 @@ const lapStatus = (time, currentState, position, fastestTime) => {
 };
 
 const updateDriverTimes = () => {
-  driverStatuses = driverStatuses.map((driverStatus) => {
-    const driver = driverStatus[0];
-    const time = driverStatus[1];
-    const status = driverStatus[2];
+  driverStatuses = driverStatuses.map(([driver, time, status]) => {
     const statusKeys = Object.keys(STATUS);
     const statusIndex = statusKeys.indexOf(status);
     const newStatusIndex = (statusIndex + 1) % statusKeys.length;
