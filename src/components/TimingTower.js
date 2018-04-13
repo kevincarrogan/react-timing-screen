@@ -109,16 +109,19 @@ const lapStatus = (time, currentState, position, fastestTime) => {
   return `+${humanReadableDelta(time, fastestTime)}`;
 };
 
+const getNextStatus = (currentStatus) => {
+  const statusKeys = Object.keys(STATUS);
+  const statusIndex = statusKeys.indexOf(currentStatus);
+  const newStatusIndex = (statusIndex + 1) % statusKeys.length;
+  const newStatusKey = statusKeys[newStatusIndex];
+
+  return STATUS[newStatusKey];
+};
+
 const updateDriverTimes = () => {
-  driverStatuses = driverStatuses.map(([driver, time, status]) => {
-    const statusKeys = Object.keys(STATUS);
-    const statusIndex = statusKeys.indexOf(status);
-    const newStatusIndex = (statusIndex + 1) % statusKeys.length;
-    const newStatusKey = statusKeys[newStatusIndex];
-    return [
-      driver, time + 1, STATUS[newStatusKey],
-    ];
-  });
+  driverStatuses = driverStatuses.map(([driver, time, status]) => (
+    [driver, time + 1, getNextStatus(status)]
+  ));
 };
 
 window.setInterval(updateDriverTimes, 5000);
