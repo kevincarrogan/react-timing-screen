@@ -109,6 +109,13 @@ const lapStatus = (time, currentState, position, fastestTime) => {
   return `+${humanReadableDelta(time, fastestTime)}`;
 };
 
+const getRandomTime = () => {
+  const min = 84560;
+  const max = 165500;
+
+  return Math.floor(Math.random() * (max - min)) + min;
+};
+
 const getNextStatus = (currentStatus) => {
   const statusKeys = Object.keys(STATUS);
   const statusIndex = statusKeys.indexOf(currentStatus);
@@ -120,7 +127,7 @@ const getNextStatus = (currentStatus) => {
 
 const updateDriverTimes = () => {
   driverStatuses = driverStatuses.map(([driver, time, status]) => (
-    [driver, time + 1, getNextStatus(status)]
+    [driver, getRandomTime(), getNextStatus(status)]
   ));
 };
 
