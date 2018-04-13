@@ -5,6 +5,10 @@ import classNames from 'classnames';
 import Driver from '../models/driver';
 import Session from '../models/session';
 
+import SessionDetails from './SessionDetails';
+
+import padIntegerStart from '../utils';
+
 import '../css/timing-tower.css';
 
 const STATUS = {
@@ -47,10 +51,6 @@ const getFastestTime = statuses => statuses
   .filter(time => !!time)
   .sort((a, b) => a > b)[0];
 
-const padIntegerStart = (integer, padLength = 2) => (
-  integer.toString().padStart(padLength, '0')
-);
-
 const humanReadableTimeFromMilliseconds = (time) => {
   let totalMilliseconds = time;
 
@@ -75,22 +75,6 @@ const humanReadableDelta = (thisTime, otherTime) => {
   const delta = thisTime - otherTime;
 
   return humanReadableTimeFromMilliseconds(delta);
-};
-
-const humanReadableTimeFromSeconds = (time) => {
-  let totalSeconds = time;
-
-  const hours = Math.floor(totalSeconds / (60 * 60));
-  totalSeconds -= hours * (60 * 60);
-
-  const minutes = Math.floor(totalSeconds / 60);
-  const paddedMinutes = padIntegerStart(minutes);
-  totalSeconds -= minutes * 60;
-
-  const seconds = totalSeconds;
-  const paddedSeconds = padIntegerStart(seconds);
-
-  return `${hours}:${paddedMinutes}:${paddedSeconds}`;
 };
 
 const lapStatus = (time, currentState, position, fastestTime) => {
@@ -142,7 +126,6 @@ class TimingTower extends React.Component {
     super(props);
 
     this.state = {
-      sessionCurrentTime: props.session.currentTime,
       driverStatuses,
     };
   }
@@ -150,7 +133,6 @@ class TimingTower extends React.Component {
   componentDidMount() {
     const tick = () => {
       this.setState({
-        sessionCurrentTime: this.props.session.currentTime,
         driverStatuses,
       });
       requestAnimationFrame(tick);
@@ -161,18 +143,10 @@ class TimingTower extends React.Component {
 
   render() {
     const fastestTime = getFastestTime(driverStatuses);
-    const sessionLength = this.props.session.length;
-    const { sessionCurrentTime } = this.state;
-    const sessionTimeLeft = sessionLength - sessionCurrentTime;
     const sortedDriverTimes = sortByTime(this.state.driverStatuses);
     return (
       <section className="timing-tower">
-        <div className="session-details">
-          <h1>{this.props.session.name}</h1>
-          <div>
-            {humanReadableTimeFromSeconds(sessionTimeLeft)}
-          </div>
-        </div>
+        <SessionDetails session={this.props.session} />
         <ol className="driver-times">
           {sortedDriverTimes.map((driverStatus, position) => {
             const [driver, time, currentState] = driverStatus;
