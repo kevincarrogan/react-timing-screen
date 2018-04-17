@@ -55,7 +55,7 @@ const getNextStatus = (currentStatus) => {
 };
 
 const updateDriverTimes = () => {
-  driverStatuses = driverStatuses.map(([driver, time, status]) => (
+  driverStatuses = driverStatuses.map(([driver, , status]) => (
     [driver, getRandomTime(), getNextStatus(status)]
   ));
 };
